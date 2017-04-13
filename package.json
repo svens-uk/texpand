@@ -1,0 +1,26 @@
+{
+  "name": "texpand",
+  "version": "0.0.1",
+  "description": "A cross-platform text expander",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/harryshipton/texpand.git"
+  },
+  "keywords": [
+    "text-expander"
+  ],
+  "author": "Harry Shipton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/harryshipton/texpand/issues"
+  },
+  "homepage": "https://github.com/harryshipton/texpand#readme",
+  "dependencies": {
+    "node-iohook": "github:ayoubserti/node-iohook",
+    "robotjs": "^0.4.7"
+  }
+}
