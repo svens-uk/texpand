@@ -113,11 +113,18 @@ class TextReplace {
 
     getArguments(map, callback) {
         this.win = new BrowserWindow();
-        this.win.on('closed', () => {
+        const closeHandler = () => {
+            this.currentlyExpanding = false;
+            this.eventEmitter.emit('finished');
             this.win = null;
-        });
+        }
+        this.win.on('closed', closeHandler);
         this.win.loadURL(generateDataURI(map));
         ipcMain.once('expansion-data', (event, args) => {
+            this.win.removeListener('closed', closeHandler);
+            this.win.on('closed', () => {
+                this.win = null;
+            })
             this.win.close();
             for(let x in args) {
                 const schemaElement = map.options[x];
