@@ -12,6 +12,7 @@ install:
     - npm install
 
 script:
+    - npm run reconfigure
     - npm run build
     - npm run pkgtar
     - npm run pkgzip
