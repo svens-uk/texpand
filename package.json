@@ -1,7 +1,7 @@
 {
   "name": "texpand",
   "productName": "texpand",
-  "version": "1.0.14",
+  "version": "1.0.15",
   "description": "A cross-platform text expander",
   "main": "index.js",
   "scripts": {
