@@ -3,6 +3,7 @@ const acceptableCodes = acceptableCharacters.split('').map(character => characte
 
 
 function keyevent(event) {
+    console.log(event);
     // if we are currently locked, return early.
     if(this.lock) {
         return;
