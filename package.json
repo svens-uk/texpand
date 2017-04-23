@@ -7,8 +7,8 @@
   "scripts": {
     "start": "electron .",
     "build": "electron-packager . texpand --overwrite --out dist/ && (echo dist/texpand-* | xargs -n 1 cp ConfigurationFile.cson)",
-    "pkgtar": "rm dist/*.tar.gz find dist -maxdepth 1 -mindepth 1 -type d -exec tar zcvf {}.tar.gz {} \\;",
-    "pkgzip": "rm dist/*.zip && for i in dist/*/; do zip -r \"${i%/}.zip\" \"$i\"; done",
+    "pkgtar": "rm -rf dist/*.tar.gz find dist -maxdepth 1 -mindepth 1 -type d -exec tar zcvf {}.tar.gz {} \\;",
+    "pkgzip": "rm -rf dist/*.zip && for i in dist/*/; do zip -r \"${i%/}.zip\" \"$i\"; done",
     "clean": "rm -rf dist/*"
   },
   "repository": {
