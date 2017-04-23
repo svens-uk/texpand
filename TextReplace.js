@@ -113,18 +113,12 @@ class TextReplace {
 
     getArguments(map, callback) {
         this.win = new BrowserWindow();
-        const closeHandler = () => {
-            this.currentlyExpanding = false;
-            this.eventEmitter.emit('finished');
-            this.win = null;
-        }
-        this.win.on('closed', closeHandler);
-        this.win.loadURL(generateDataURI(map));
-        ipcMain.once('expansion-data', (event, args) => {
+        let ipcHandler, closeHandler;
+        ipcHandler = (event, args) => {
             this.win.removeListener('closed', closeHandler);
-            this.win.on('closed', () => {
+            this.win.once('closed', () => {
                 this.win = null;
-            })
+            });
             this.win.close();
             for(let x in args) {
                 const schemaElement = map.options[x];
@@ -142,7 +136,16 @@ class TextReplace {
                 }
             }
             callback(args);
-        });
+        }
+        closeHandler = () => {
+            this.win = null;
+            ipcMain.removeListener('expansion-data', ipcHandler);
+            this.currentlyExpanding = false;
+            this.eventEmitter.emit('finished');
+        }
+        this.win.once('closed', closeHandler);
+        this.win.loadURL(generateDataURI(map));
+        ipcMain.once('expansion-data', ipcHandler);
     }
 }
 
