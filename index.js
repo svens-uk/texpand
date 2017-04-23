@@ -15,7 +15,6 @@ const TextReplace = require('./TextReplace.js');
 
 
 // Constants
-const iconPath = path.join(__dirname, 'static', 'texpand.png');
 
 // Application
 
@@ -47,7 +46,7 @@ app.on('ready', () => {
     //     process.exit();
     // });
     // Read the configuration file
-    const maps = CSON.load('ConfigurationFile.cson');
+    const maps = CSON.load(path.join(__dirname, 'ConfigurationFile.cson'));
 
     const eventEmitter = new EventEmitter();
 
