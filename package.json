@@ -6,7 +6,7 @@
   "main": "index.js",
   "scripts": {
     "start": "electron .",
-    "build": "electron-packager . texpand --overwrite --all --out dist/ && (echo dist/texpand-* | xargs -n 1 cp ConfigurationFile.cson)",
+    "build": "electron-packager . texpand --overwrite --out dist/ && (echo dist/texpand-* | xargs -n 1 cp ConfigurationFile.cson)",
     "pkgtar": "rm dist/*.tar.gz find dist -maxdepth 1 -mindepth 1 -type d -exec tar zcvf {}.tar.gz {} \\;",
     "pkgzip": "rm dist/*.zip && for i in dist/*/; do zip -r \"${i%/}.zip\" \"$i\"; done",
     "clean": "rm -rf dist/*"
@@ -41,6 +41,7 @@
     "electron": "^1.6.5",
     "electron-installer-debian": "^0.5.1",
     "electron-installer-redhat": "^0.4.0",
+    "electron-packager": "^8.6.0",
     "electron-rebuild": "^1.5.7"
   },
   "iohook": {
