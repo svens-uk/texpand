@@ -31,6 +31,6 @@ deploy:
   file_glob: true
   api_key:
     secure: YGkU8vSR/ltcP11R9AxmBUU+9hxko57i8R6Iy5e5bUNCfP+uDpjPVK0w6TV6zQ3v1OqQDBmgQBVmr+003SzXca7ULP/2G+m1UvyN65zR++SgHY9fZTQAlJ7u5TciJ+psBp1m8Y9dOtxuE5nihXwIIP6qC3Xg7M54PFDucy1FoIkMJzcZ4Gb0oRDE+ujnLz5lCHKeVB3uU+dAlIjz/MgbyAJgl4lcaeiWeTvEa9tukJx2AqxYxjL6BVm+UShBC3AWcGja6emy+aevidKRTiUrP+R2I0JtohIJS+XSjEzX3KZ8HGtIX/xe5qdm+FWJm7hO26nLqB3yhquTsUcpcrg+BXCiQl1fjqDUWP4zQ93DRouoEmkflEZ+LCGXC/zLtif65NLIgFZz+kSKcsJJpQnup78Pm8+/t9TOXD/YiTYs9oaSLbhCH+5xKiLv2GfOYogJP1nxAnSk/kc0OAm1c6KMEa9nrnYMvzDJRJ9/d/2luLv8lt+VI2NcyFJ3fWtMX2MTPlP8mw60Cq/qTO7fybb/zxt/UfrOgcO4ZhsYKROiTrhh/llxcd6umlPREgxEcWLRtb8iw8JEsBGVsWT6VdmgUbyEih+4yl57M68DIYQo4MuWjrxNmaK7oMbwJeAvbrBB12Kwt+5G0TxK7ryBGdb34kZdbbVCQ0c/GRvQeaOfXpo=
-  file: "${RELEASE_PKG_FILE}"
+  file: "dist/texpand-*"
   on:
     tags: true
