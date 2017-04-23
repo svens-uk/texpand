@@ -1,0 +1,118 @@
+###
+This file is case sensitive. Format is:
+
+"myalias":
+    name: "Long name, so you know what it is"
+    expansion: '''
+    This is what myalias is expanded to.
+    It can span multiple lines
+    '''
+
+If you're using EJS for scripting (http://ejs.co/), then the formatting is like so:
+
+"myalias":
+    name: "Long name"
+    expansion: '''
+    Hi <%- options.firstname %>, you are <%- options.age %> years old, and your birthday is on <%- options.birthday.toString() %>.
+
+    <% if(options.bool) { %>The checkbox was selected<% } %>
+    
+    Our randomly selected phrase was: <%- vars.randomSelectList[Math.floor(Math.random() * vars.randomSelectList.length)] %>
+    '''
+    options:
+        firstname:
+            name: "Name" # Friendly name, so you know what the option does
+            type: "String" # This will be a string. See the types later
+        age:
+            name: "Age"
+            type: "Number"
+        birthday:
+            name: "Birthday"
+            type: "Date"
+        bool:
+            name: "Checkbox (true/false)"
+            type: "Boolean"
+    vars:
+        randomSelectList: [
+            "a"
+            "bc"
+            "def"
+            "ghij"
+        ] # This section can use native JSON/CSON/JS types, rather than having to specify the type in the object notation
+
+
+
+
+In the options section, the possible formats are:
+# Manual string entry
+myoption1: 
+    name: "Manual string entry"
+    type: "String"
+# Dropdown single choice string
+myoption2:
+    name: "Single choice string"
+    type: "String"
+    selection: [
+        "some"
+        "text"
+        "here"
+    ]
+# Dropdown multiple choice string
+myoption3:
+    name: "Multiple choice string"
+    multiple: true
+    type: [
+        "you"
+        "can"
+        "select"
+        "many"
+        "of"
+        "these"
+    ]
+# Manual number entry
+myoption4:
+    name: "Manual number entry"
+    type: "Number"
+# Actually, the number options are exactly the same as the string (in terms of dropdowns)
+
+# Date input
+myoption5:
+    name: "Date input"
+    type: "Date"
+
+# Boolean (true/false) input (checkbox)
+myoption6:
+    name: "Boolean input"
+    type: "Boolean"
+
+
+Hopefully that makes sense. If not, ping me a message on Slack (@harry), or an email (harry@agilebits.com)
+    
+###
+
+";greeting":
+    name: "Greeter"
+    expansion: '''
+    <%- vars.greetings[Math.floor(Math.random() * vars.greetings.length)] %> <%- options.name %>!
+    '''
+    options:
+        name:
+            name: "Name"
+            type: "String"
+    vars:
+        greetings: [
+            "Hi"
+            "Hey"
+        ]
+";sig":
+    name: "Signature"
+    expansion: '''
+    <%- vars.signoff[Math.floor(Math.random() * vars.signoff.length)] %>,
+    Name Here
+    Company Here
+    '''
+    vars:
+        signoff: [
+            "Thanks"
+            "Cheers"
+        ]
