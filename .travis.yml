@@ -3,15 +3,13 @@ dist: trusty
 sudo: true
 matrix:
   include:
-    - os: linux
-      env: ARCH=x32
     - os: osx
 
 node_js:
   - "6"
 
 install:
-    - npm i --ignore-scripts
+    - npm install
 
 script:
     - npm run build
