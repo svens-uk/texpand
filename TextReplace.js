@@ -1,5 +1,4 @@
 // Node imports
-const fs = require('fs');
 
 
 // External imports
@@ -9,7 +8,6 @@ const {BrowserWindow, ipcMain} = require('electron');
 const ejs = require('ejs');
 
 // Internal imports
-fs.writeFileSync('texpand.log', ''); // Clearing the log.
 
 // Constants
 
