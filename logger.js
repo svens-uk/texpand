@@ -1,11 +1,11 @@
 const bunyan = require('bunyan');
 const path = require('path');
 
-function checkOrDefault(input, default, acceptableValues) {
+function checkOrDefault(input, defaultValue, acceptableValues) {
     if(acceptableValues.includes(input)) {
         return input;
     } else {
-        return default;
+        return defaultValue;
     }
 }
 
