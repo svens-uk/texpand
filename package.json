@@ -12,7 +12,7 @@
     "minbuild": "electron-packager . texpand --overwrite --out dist/",
     "pkgtar": "rm -rf dist/*.tar.gz && find dist -maxdepth 1 -mindepth 1 -type d -exec tar zcf {}.tar.gz {} \\;",
     "pkgzip": "rm -rf dist/*.zip && for i in dist/*/; do zip -r -q \"${i%/}.zip\" \"$i\"; done",
-    "pkgwinzip": "for /d %%X in (dist\\texpand-*) do 7z a \"%%X.zip\" \"%%X\\\"",
+    "pkgwinzip": "for /d %X in (dist\\texpand-*) do 7z a \"%X.zip\" \"%X\\\"",
     "clean": "rm -rf dist/*"
   },
   "repository": {
