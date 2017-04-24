@@ -17,11 +17,11 @@ module.exports = bunyan.createLogger({
     src: true,
     streams: [
         {
-            level: checkOrDefault(process.argv[2], 'trace', logLevels),
+            level: checkOrDefault(process.argv[2], 'debug', logLevels),
             stream: process.stdout
         },
         {
-            level: checkOrDefault(process.argv[3], 'trace', logLevels),
+            level: checkOrDefault(process.argv[3], 'info', logLevels),
             path: path.join(__dirname, 'texpand.log')
         }
     ]
