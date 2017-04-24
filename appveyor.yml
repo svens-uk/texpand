@@ -21,6 +21,7 @@ install:
   - npm run pkgwinzip
 
 deploy:
+    tag: $(appveyor_repo_tag_name)
     description: 'Windows build'
     provider: GitHub
     auth_token:
