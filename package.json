@@ -5,7 +5,7 @@
   "description": "A cross-platform text expander",
   "main": "index.js",
   "scripts": {
-    "start": "electron . | bunyan -l info",
+    "start": "electron . | bunyan -l debug",
     "debug": "electron . | bunyan",
     "reconfigure": "electron-rebuild",
     "build": "electron-packager . texpand --overwrite --out dist/ && (echo dist/texpand-* | xargs -n 1 cp ConfigurationFile.cson)",
