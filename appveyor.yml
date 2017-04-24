@@ -19,13 +19,17 @@ install:
   - npm run minbuild
   - npm run pkgwinzip
 
+artifacts:
+  - path: /dist\\texpand-.+\.zip/
+
+
 deploy:
     tag: $(appveyor_repo_tag_name)
     description: 'Windows build'
     provider: GitHub
     auth_token:
         secure: ZJL/17Jof5bsRgSkLn8Z6m91jdqr37KAHDm+xyEHCG1gFLKnht6Res9fdLDj6x44
-    artifact: /dist\\texpand-.+\.(tar\.gz|zip)/
+    artifact: /dist\\texpand-.+\.zip/
     draft: false
     prerelease: false
     on:
