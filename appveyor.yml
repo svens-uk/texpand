@@ -20,7 +20,7 @@ install:
   - npm run pkgwinzip
 
 artifacts:
-  - path: /dist\\texpand-.+\.zip/
+  - path: dist\texpand-*.zip
 
 
 deploy:
