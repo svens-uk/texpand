@@ -5,12 +5,7 @@ skip_tags: true
 
 environment:
   matrix:
-    - arch: x86_64
-      bits: 64
-      nodejs_version: 6
-    - arch: i686
-      bits: 32
-      nodejs_version: 6
+    - nodejs_version: 6
 
 platform:
   - x64
