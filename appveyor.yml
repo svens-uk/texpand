@@ -21,6 +21,7 @@ install:
 
 artifacts:
   - path: dist\texpand-*.zip
+    name: texpand
 
 
 deploy:
@@ -29,7 +30,7 @@ deploy:
     provider: GitHub
     auth_token:
         secure: ZJL/17Jof5bsRgSkLn8Z6m91jdqr37KAHDm+xyEHCG1gFLKnht6Res9fdLDj6x44
-    artifact: dist\texpand-*.zip
+    artifact: texpand
     draft: false
     prerelease: false
     on:
