@@ -1,0 +1,38 @@
+os: Visual Studio 2013
+version: "{build}"
+build: off
+skip_tags: true
+
+environment:
+  matrix:
+    - arch: x86_64
+      bits: 64
+      nodejs_version: 6
+    - arch: i686
+      bits: 32
+      nodejs_version: 6
+
+platform:
+  - x64
+  - x86
+
+install:
+  - ps: Install-Product node $env:nodejs_version $env:platform
+  - npm -g i npm@latest
+  - set PATH=%APPDATA%\npm;%APPVEYOR_BUILD_FOLDER%\node_modules\.bin;%PATH%
+  - npm install
+  - for /f %%i in ('node -v') do set exact_nodejs_version=%%i
+  - npm run minbuild
+  - npm run pkgwinzip
+
+deploy:
+    description: 'Windows build'
+    provider: GitHub
+    auth_token:
+        secure: ZJL/17Jof5bsRgSkLn8Z6m91jdqr37KAHDm+xyEHCG1gFLKnht6Res9fdLDj6x44
+    artifact: /dist\\texpand-.+\.(tar\.gz|zip)/
+    draft: false
+    prerelease: false
+    on:
+        branch: master
+        appveyor_repo_tag: true
