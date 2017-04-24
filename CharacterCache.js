@@ -1,9 +1,11 @@
+const logger = require('./logger.js');
+
 const acceptableCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`0123456789-=¬!"£$%^&*()_+[];\'#\\,./{}:@~|<>? ';
 const acceptableCodes = acceptableCharacters.split('').map(character => character.charCodeAt(0));
 
 
 function keyevent(event) {
-    console.log(event);
+    logger.trace({event}, 'Key event');
     // if we are currently locked, return early.
     if(this.lock) {
         return;
@@ -54,6 +56,7 @@ function keyevent(event) {
 }
 
 function mousedown(event) {
+    logger.trace({event}, 'Mouse event');
     // if we are currently locked, return early.
     if(this.lock) {
         return;
@@ -63,7 +66,7 @@ function mousedown(event) {
 
 function finished() {
     this.lock = false;
-
+    logger.info('Received finished event. Unlocked.');
 }
 
 class CharacterCache {
@@ -82,14 +85,17 @@ class CharacterCache {
         this.iohook.on('keyup', keyevent.bind(this));
         this.iohook.on('mousedown', mousedown.bind(this));
         this.eventEmitter.on('finished', finished.bind(this));
+        logger.debug('Finished CharacterCache event registration');
     }
 
     checkPerfectMatch() {
         const totalString = this.characterCache.join('');
+        logger.trace({totalString}, 'Total typed string');
         for(let alias in this.maps) {
-            const e = this.maps[alias];
             if(totalString.endsWith(alias)) {
+                const e = this.maps[alias];
                 this.lock = true;
+                logger.debug({match: e}, 'Found match. Locked.');
                 this.eventEmitter.emit('expansion', alias, e);
                 this.reset();
                 return;
@@ -97,14 +103,17 @@ class CharacterCache {
         }
     }
     reset() {
+        logger.debug('Resetting string');
         this.characterCache = [];
     }
 
     removeLastCharacter() {
+        logger.debug('Removing last character');
         this.characterCache.pop();
     }
 
     removeLastWord() {
+        logger.debug('Removing last word');
         const lastOccurence = this.characterCache.lastIndexOf(' ');
         this.characterCache = this.characterCache.slice(0, lastOccurence >= 0 ? lastOccurence : 0);
     }

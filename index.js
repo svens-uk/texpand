@@ -8,53 +8,80 @@ const CSON = require('cson');
 const {app, BrowserWindow, globalShortcut} = require('electron');
 const iohook = require('iohook');
 
-
 // Internal imports
 const CharacterCache = require('./CharacterCache.js');
 const TextReplace = require('./TextReplace.js');
+const logger = require('./logger.js');
 
 
 // Constants
 
 // Application
 
-// let win;
-let appIcon;
+let win;
 
 // Wait for electron to be ready
+
+function quit() {
+    app.quit();
+    process.exit();
+}
+function quitError(err) {
+    logger.fatal({err});
+    quit();
+}
+
 app.on('ready', () => {
     // Create the base window
-    win = new BrowserWindow({show: false});
-    win.on('closed', () => {
-        win = null;
-    });
-    const ret = globalShortcut.register('Shift+Tab+Q', () => {
-        console.log('exit');
-        app.quit();
-        process.exit();
-    });
-
-    if (!ret) {
-        console.log('registration failed');
-        return;
+    try {
+        win = new BrowserWindow({show: false});
+        win.on('closed', () => {
+            win = null;
+        });
+    } catch (e) {
+        quitError(e);
     }
+    logger.debug('Created hidden base window');
 
+    // Register handler
+    try {
+        const ret = globalShortcut.register('Shift+Tab+Q', () => {
+            logger.info('Detected exit key combination. Quitting!');
+            win.close();
+            quit();
+        });
+        if (!ret) {
+            throw new Error('Failed to register exit keybinding');
+        }
+    } catch (err) {
+        quitError(err);
+    }
+    logger.info('Successfully registered exit keybinding');
 
-    // Register whole app closing event
-    // app.on('window-all-closed', () => {
-    //     app.quit();
-    //     process.exit();
-    // });
     // Read the configuration file
-    const maps = CSON.load(path.join(__dirname, 'ConfigurationFile.cson'));
+    let maps;
+    try {
+        maps = CSON.load(path.join(__dirname, 'ConfigurationFile.cson'));
+    } catch (err) {
+        quitError(err);
+    }
+    logger.debug({maps}, 'Successfully loaded maps');
 
     const eventEmitter = new EventEmitter();
+    logger.trace('Created EventEmitter');
 
     const textReplace = new TextReplace(eventEmitter);
+    logger.trace('Created TextReplace');
 
     const characterCache = new CharacterCache(maps, iohook, eventEmitter);
+    logger.trace('Created CharacterCache');
 
-    iohook.start();
+    try {
+        iohook.start();
+    } catch (err) {
+        quitError(err);
+    }
+    logger.info('Started iohook listener');
 });
 
 // Exports

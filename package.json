@@ -5,7 +5,8 @@
   "description": "A cross-platform text expander",
   "main": "index.js",
   "scripts": {
-    "start": "electron .",
+    "start": "electron . | bunyan -l info",
+    "debug": "electron . | bunyan",
     "reconfigure": "electron-rebuild",
     "build": "electron-packager . texpand --overwrite --out dist/ && (echo dist/texpand-* | xargs -n 1 cp ConfigurationFile.cson)",
     "pkgtar": "rm -rf dist/*.tar.gz && find dist -maxdepth 1 -mindepth 1 -type d -exec tar zcf {}.tar.gz {} \\;",
@@ -36,6 +37,7 @@
     "robotjs": "^0.4.7"
   },
   "devDependencies": {
+    "bunyan": "^1.8.10",
     "electron": "^1.6.5",
     "electron-packager": "^8.6.0",
     "electron-rebuild": "^1.5.7"
@@ -51,8 +53,7 @@
       "win32"
     ],
     "arches": [
-      "x64",
-      "ia32"
+      "x64"
     ]
   }
 }
