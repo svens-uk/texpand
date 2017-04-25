@@ -1,15 +1,14 @@
 const logger = require('./logger.js');
-const keyConvert = require('./keyConvert.js');
+const iohookRCNormalise = require('iohook-rc-normalise');
+const keysym = require('keysym');
 
 const acceptableCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`0123456789-=¬!"£$%^&*()_+[];\'#\\,./{}:@~|<>? ';
 const acceptableCodes = acceptableCharacters.split('').map(character => character.charCodeAt(0));
 
 function processEventPlatform(event) {
-    if(process.platform !== 'linux') {
-        event.rawcode = keyConvert.keycodeToKeysym(event.rawcode);
-    }
-    const keycode = keyConvert.keysymToKeycode(event.rawcode);
-    event.keychar = (keycode || keycode === 0 ? String.fromCharCode(keycode) : undefined);
+    event.rawcode = iohookRCNormalise(event.rawcode);
+    const keySym = (event.rawcode || event.rawcode === 0) ? keysym.fromKeysym(event.rawcode) : undefined;
+    event.keychar = ((keySym && keySym.unicode) ? keySym.unicode : undefined);
 }
 
 function keyevent(event) {
