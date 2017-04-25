@@ -1,10 +1,19 @@
 const logger = require('./logger.js');
+const keyConvert = require('./keyConvert.js');
 
 const acceptableCharacters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz`0123456789-=¬!"£$%^&*()_+[];\'#\\,./{}:@~|<>? ';
 const acceptableCodes = acceptableCharacters.split('').map(character => character.charCodeAt(0));
 
+function processEventPlatform(event) {
+    if(process.platform !== 'linux') {
+        event.rawcode = keyConvert.keycodeToKeysym(event.rawcode);
+    }
+    const keycode = keyConvert.keysymToKeycode(event.rawcode);
+    event.keychar = (keycode || keycode === 0 ? String.fromCharCode(keycode) : undefined);
+}
 
 function keyevent(event) {
+    processEventPlatform(event);
     logger.trace({event}, 'Key event');
     // if we are currently locked, return early.
     if(this.lock) {

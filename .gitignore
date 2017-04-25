@@ -29,3 +29,7 @@ node_modules
 
 # Compiled output
 dist
+
+# Quick code test files
+spike.js
+*.spike.js
