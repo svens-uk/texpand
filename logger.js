@@ -1,6 +1,10 @@
 const bunyan = require('bunyan');
 const path = require('path');
 
+const minimist = require('minimist');
+const argv = minimist(process.argv.slice(process.defaultApp ? 2 : 1));
+
+
 function checkOrDefault(input, defaultValue, acceptableValues) {
     if(acceptableValues.includes(input)) {
         return input;
@@ -17,12 +21,12 @@ module.exports = bunyan.createLogger({
     src: true,
     streams: [
         {
-            level: checkOrDefault(process.argv[2], 'debug', logLevels),
+            level: checkOrDefault(argv.consolelevel, 'info', logLevels),
             stream: process.stdout
         },
         {
-            level: checkOrDefault(process.argv[3], 'debug', logLevels),
-            path: path.join(__dirname, 'texpand.log')
+            level: checkOrDefault(argv.filelevel, 'info', logLevels),
+            path: path.join(__dirname, argv.logfile || 'texpand.log')
         }
     ]
 });

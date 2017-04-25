@@ -7,6 +7,8 @@ const path = require('path');
 const CSON = require('cson');
 const {app, BrowserWindow, globalShortcut, Menu, Tray} = require('electron');
 const iohook = require('iohook');
+const minimist = require('minimist');
+
 
 // Internal imports
 const CharacterCache = require('./CharacterCache.js');
@@ -20,7 +22,6 @@ const logger = require('./logger.js');
 
 let win, tray;
 
-// Wait for electron to be ready
 
 function quit() {
     app.quit();
@@ -31,6 +32,11 @@ function quitError(err) {
     quit();
 }
 
+// Process command line arguments
+const argv = minimist(process.argv.slice(process.defaultApp ? 2 : 1));
+
+
+// Wait for electron to be ready
 app.on('ready', () => {
     // Create the base window
     try {
@@ -43,29 +49,33 @@ app.on('ready', () => {
     }
     logger.debug('Created hidden base window');
     
-    try {
-        tray = new Tray(path.join(__dirname, 'static', 'texpand.png'));
-        const contextMenu = Menu.buildFromTemplate([
-            {
-                label: 'Quit',
-                type: 'normal',
-                click: () => {
-                    logger.info('Quit button in tray pressed. Quitting!');
-                    win.close();
-                    quit();
+    if(process.platform !== 'linux' || argv.forceicon) {
+        try {
+            tray = new Tray(path.join(__dirname, 'static', 'texpand.png'));
+            const contextMenu = Menu.buildFromTemplate([
+                {
+                    label: 'Quit',
+                    type: 'normal',
+                    click: () => {
+                        logger.info('Quit button in tray pressed. Quitting!');
+                        win.close();
+                        quit();
+                    }
                 }
-            }
-        ]);
-        tray.setToolTip('texpand');
-        tray.setContextMenu(contextMenu);
-    } catch (e) {
-        quitError(e);
+            ]);
+            tray.setToolTip('texpand');
+            tray.setContextMenu(contextMenu);
+        } catch (e) {
+            quitError(e);
+        }
+        logger.debug('Created tray');
+    } else {
+        logger.debug('Skipped creating tray');
     }
-    logger.debug('Created tray');
-    
+
     // Register handler
     try {
-        const ret = globalShortcut.register('Shift+Tab+Q', () => {
+        const ret = globalShortcut.register('CommandOrControl+Tab+Q', () => {
             logger.info('Detected exit key combination. Quitting!');
             win.close();
             quit();
