@@ -5,7 +5,7 @@ const path = require('path');
 
 // External imports
 const CSON = require('cson');
-const {app, BrowserWindow, globalShortcut} = require('electron');
+const {app, BrowserWindow, globalShortcut, Menu, Tray} = require('electron');
 const iohook = require('iohook');
 
 // Internal imports
@@ -18,7 +18,7 @@ const logger = require('./logger.js');
 
 // Application
 
-let win;
+let win, tray;
 
 // Wait for electron to be ready
 
@@ -42,7 +42,27 @@ app.on('ready', () => {
         quitError(e);
     }
     logger.debug('Created hidden base window');
-
+    
+    try {
+        tray = new Tray(path.join(__dirname, 'static', 'texpand.png'));
+        const contextMenu = Menu.buildFromTemplate([
+            {
+                label: 'Quit',
+                type: 'normal',
+                click: () => {
+                    logger.info('Quit button in tray pressed. Quitting!');
+                    win.close();
+                    quit();
+                }
+            }
+        ]);
+        tray.setToolTip('texpand');
+        tray.setContextMenu(contextMenu);
+    } catch (e) {
+        quitError(e);
+    }
+    logger.debug('Created tray');
+    
     // Register handler
     try {
         const ret = globalShortcut.register('Shift+Tab+Q', () => {
