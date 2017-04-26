@@ -16,7 +16,8 @@ install:
   - set PATH=%APPDATA%\npm;%APPVEYOR_BUILD_FOLDER%\node_modules\.bin;%PATH%
   - npm install
   - for /f %%i in ('node -v') do set exact_nodejs_version=%%i
-  - npm run minbuild
+  - npm run reconfigure
+  - npm run winbuild
   - npm run pkgwinzip
 
 artifacts:

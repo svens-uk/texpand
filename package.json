@@ -9,7 +9,7 @@
     "debug": "electron . | bunyan",
     "reconfigure": "electron-rebuild",
     "build": "electron-packager . texpand --overwrite --out dist/ && (echo dist/texpand-* | xargs -n 1 cp ConfigurationFile.cson)",
-    "minbuild": "electron-packager . texpand --overwrite --out dist/",
+    "winbuild": "electron-packager . texpand --overwrite --out dist/ && for /d %X in (dist\\texpand-*) do xcopy /y /d ConfigurationFile.cson \"%X\\\"",
     "pkgtar": "rm -rf dist/*.tar.gz && find dist -maxdepth 1 -mindepth 1 -type d -exec tar zcf {}.tar.gz {} \\;",
     "pkgzip": "rm -rf dist/*.zip && for i in dist/*/; do zip -r -q \"${i%/}.zip\" \"$i\"; done",
     "pkgwinzip": "for /d %X in (dist\\texpand-*) do 7z a \"%X.zip\" \"%X\\\"",
