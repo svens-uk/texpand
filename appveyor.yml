@@ -20,7 +20,7 @@ install:
   - npm run reconfigure
   - dir node_modules
   - npm run winbuild
-  - for /d %X in (dist\\texpand-*) do dir %X\resources\app\node_modules
+  - dir dist\texpand-win32-x64\resources\app\node_modules
   - npm run pkgwinzip
 
 artifacts:
