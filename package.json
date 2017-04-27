@@ -49,7 +49,6 @@
   },
   "iohook": {
     "targets": [
-      "node-48",
       "electron-53"
     ],
     "platforms": [
