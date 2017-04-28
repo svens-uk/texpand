@@ -15,12 +15,9 @@ install:
   - npm -g i npm@latest
   - set PATH=%APPDATA%\npm;%APPVEYOR_BUILD_FOLDER%\node_modules\.bin;%PATH%
   - npm install
-  - dir node_modules
   - for /f %%i in ('node -v') do set exact_nodejs_version=%%i
   - npm run reconfigure
-  - dir node_modules
   - npm run winbuild
-  - dir dist\texpand-win32-x64\resources\app\node_modules
   - npm run pkgwinzip
 
 artifacts:
