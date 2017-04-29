@@ -91,7 +91,7 @@ app.on('ready', () => {
     // Read the configuration file
     let maps;
     try {
-        maps = CSON.load(path.join(__dirname, 'ConfigurationFile.cson'));
+        maps = CSON.load(argv.config || (process.platform === 'darwin' ? path.join(__dirname, 'ConfigurationFile.cson') : 'ConfigurationFile.cson'));
     } catch (err) {
         quitError(err);
     }
